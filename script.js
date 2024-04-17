@@ -16,6 +16,8 @@ function createGame (){
 
     let gameNumber = 0;
     let turns = 1;
+    const fieldArray = new Array(9)
+
     const getGameNumber = () => {return gameNumber}
     const nextGame = () => {gameNumber++}
     const resetGame = () => {gameNumber = 0}
@@ -25,7 +27,7 @@ function createGame (){
     const player1 = createPlayer(1,"Andoss")
     const player2 = createPlayer(2,"Landi")
 
-    return{getGameNumber,nextGame,player1,player2, resetGame, getTurns, nextTurn}
+    return{getGameNumber,nextGame,player1,player2, resetGame, getTurns, nextTurn, fieldArray}
 }
 
 const gameBox = document.querySelector(".game")
@@ -39,22 +41,21 @@ startGame.addEventListener('click',() => {
 const ttt = createGame()
 
 function switchSign (){
-    let turn = ttt.getTurns()
-    turn % 2 ? console.log("X"): console.log("O")
-    ttt.nextTurn() 
+    let turns;
+    ttt.getTurns() % 2 ? turns = "X" :turns ="O"
+    ttt.nextTurn();
+    return turns;
 }
 
 let fields = document.querySelectorAll(".field");
 fields.forEach(field => {
     function getPosition () {
         let position = field.getAttribute("data-arr-num");
-        console.log(position)
-        field.classList.add("checked")
-        field.textContent = "X"
-        field.removeEventListener('click',getPosition)
+        field.classList.add("checked");
+        let sign = switchSign()
+        field.textContent = sign;
+        ttt.fieldArray.splice(position,1,sign)
+        console.log(ttt.fieldArray)
     }
-    field.addEventListener('click',getPosition)
-    
-    
-    
+    field.addEventListener('click', getPosition, {once:true})
 });
