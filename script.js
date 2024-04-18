@@ -31,15 +31,19 @@ function createGame (){
 }
 
 const gameBox = document.querySelector(".game")
-const startGame = document.querySelector(".start");
-startGame.addEventListener('click',() => {
-  startGame.classList.add("hidden")
-  gameBox.classList.remove("hidden")
-})
+const start = document.querySelector(".start");
+start.addEventListener('click',startGame)
 
+function startGame () {
+    start.classList.add("hidden")
+    gameBox.classList.remove("hidden") 
+    ttt = createGame()
 
+}
 
-const ttt = createGame()
+let ttt;
+
+ 
 
 function switchSign (){
     let turns;
@@ -68,30 +72,76 @@ fields.forEach(field => {
 });
 
 
+let winner = document.querySelector("#end")
+
+
+
+
 function gameLogic (array,position) {
     const firstRow = () => {
-        if(array[0]===array[1] && array[0]===array[2]) console.log("1Row")
+        if(array[0]===array[1] && array[0]===array[2]){
+            
+            array[position]==="X"
+            ?winner.textContent = `Winner is ${ttt.player1.getName()}`
+            :winner.textContent = `Winner is ${ttt.player2.getName()}`
+        } 
     }
     const secRow = () => {
-        if(array[3]===array[4] && array[3]===array[5]) console.log("2Row")
+        if(array[3]===array[4] && array[3]===array[5]){
+
+            array[position]==="X"
+            ?winner.textContent = `Winner is ${ttt.player1.getName()}`
+            :winner.textContent = `Winner is ${ttt.player2.getName()}`
+
+        } 
     }
     const thirdRow = () => {
-        if(array[6]===array[7] && array[6]===array[8]) console.log("3Row")
+        if(array[6]===array[7] && array[6]===array[8]){
+
+            array[position]==="X"
+            ?winner.textContent = `Winner is ${ttt.player1.getName()}`
+            :winner.textContent = `Winner is ${ttt.player2.getName()}`
+        } 
     }
     const firstCol = () => {
-        if(array[0]===array[3] && array[0]===array[6]) console.log("1Col")
+        if(array[0]===array[3] && array[0]===array[6]){
+
+            array[position]==="X"
+            ?winner.textContent = `Winner is ${ttt.player1.getName()}`
+            :winner.textContent = `Winner is ${ttt.player2.getName()}`
+        } 
     }
     const secCol = () => {
-        if(array[1]===array[4] && array[1]===array[7]) console.log("2Col")
+        if(array[1]===array[4] && array[1]===array[7]){
+
+            array[position]==="X"
+            ?winner.textContent = `Winner is ${ttt.player1.getName()}`
+            :winner.textContent = `Winner is ${ttt.player2.getName()}`
+        } 
     }    
     const thirdCol = () => {
-        if(array[2]===array[5] && array[2]===array[8]) console.log("3Col")
+        if(array[2]===array[5] && array[2]===array[8]){
+
+            array[position]==="X"
+            ?winner.textContent = `Winner is ${ttt.player1.getName()}`
+            :winner.textContent = `Winner is ${ttt.player2.getName()}`
+        } 
     }
     const firstDg = () => {
-        if(array[0]===array[4] && array[0]===array[8]) console.log("1Dg")
+        if(array[0]===array[4] && array[0]===array[8]){
+
+            array[position]==="X"
+            ?winner.textContent = `Winner is ${ttt.player1.getName()}`
+            :winner.textContent = `Winner is ${ttt.player2.getName()}`
+        } 
     }
     const secDg = () => {
-        if(array[2]===array[4] && array[2]===array[6]) console.log("2Dg")
+        if(array[2]===array[4] && array[2]===array[6]){
+
+            array[position]==="X"
+            ?winner.textContent = `Winner is ${ttt.player1.getName()}`
+            :winner.textContent = `Winner is ${ttt.player2.getName()}`
+        } 
     }
 
 
@@ -140,29 +190,4 @@ function gameLogic (array,position) {
         default:
             break;
     }
-
-    // if(position == 0 || position == 1 || position ==2){
-    //     firstRow()
-    // }
-    // if(position == 3 || position == 4 || position ==5){
-    //     secRow()
-    // }
-    // if(position == 6 || position == 7 || position ==8){
-    //     thirdRow()
-    // }
-    // if(position == 0 || position == 3 || position ==6){
-    //     firstCol()
-    // }
-    // if(position == 1 || position == 4 || position ==7){
-    //     secCol()
-    // }
-    // if(position == 2 || position == 5 || position ==8){
-    //     thirdCol()
-    // }
-    // if(position == 0 || position == 4 || position ==8){
-    //     firstDg()
-    // }
-    // if(position == 2 || position == 4 || position ==6){
-    //     secDg()
-    // }
 }
