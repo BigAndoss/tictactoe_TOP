@@ -1,8 +1,8 @@
-function createPlayer (playerNumber, name){
+function createPlayer (name){
     
     let score = 0
 
-    const player = `${playerNumber}: ${name}`;
+    const player = `${name}`;
     // const setName = () => { player = name}
     const getName = () => {return player}
     const getScore = () => {return score}
@@ -24,8 +24,8 @@ function createGame (){
     const nextTurn = () => {turns++}
     const getTurns = () => {return turns};
 
-    const player1 = createPlayer(1,"Andoss")
-    const player2 = createPlayer(2,"Landi")
+    const player1 = createPlayer(prompt("First Player:"))
+    const player2 = createPlayer(prompt("Second Player:"))
 
     return{getGameNumber,nextGame,player1,player2, resetGame, getTurns, nextTurn, fieldArray}
 }
@@ -39,11 +39,18 @@ function startGame () {
     gameBox.classList.remove("hidden") 
     ttt = createGame()
 
+    const p1 = document.querySelector(".player1") 
+    const p2 = document.querySelector(".player2")
+    p1.textContent = `${ttt.player1.getName()}`
+    p2.textContent = `${ttt.player2.getName()}`
+    
 }
 
 let ttt;
 
- 
+function nextGame () {
+    
+}
 
 function switchSign (){
     let turns;
@@ -72,18 +79,23 @@ fields.forEach(field => {
 });
 
 
+
+
 let winner = document.querySelector("#end")
 
-
-
+const dialog = document.querySelector("dialog")
+const nextGameButton = document.querySelector(".nextGame")
+nextGameButton.addEventListener('click',nextGame)
 
 function gameLogic (array,position) {
     const firstRow = () => {
         if(array[0]===array[1] && array[0]===array[2]){
-            
+
             array[position]==="X"
             ?winner.textContent = `Winner is ${ttt.player1.getName()}`
             :winner.textContent = `Winner is ${ttt.player2.getName()}`
+            dialog.showModal()
+
         } 
     }
     const secRow = () => {
@@ -92,6 +104,7 @@ function gameLogic (array,position) {
             array[position]==="X"
             ?winner.textContent = `Winner is ${ttt.player1.getName()}`
             :winner.textContent = `Winner is ${ttt.player2.getName()}`
+            dialog.showModal()
 
         } 
     }
@@ -101,6 +114,8 @@ function gameLogic (array,position) {
             array[position]==="X"
             ?winner.textContent = `Winner is ${ttt.player1.getName()}`
             :winner.textContent = `Winner is ${ttt.player2.getName()}`
+            dialog.showModal()
+
         } 
     }
     const firstCol = () => {
@@ -109,6 +124,8 @@ function gameLogic (array,position) {
             array[position]==="X"
             ?winner.textContent = `Winner is ${ttt.player1.getName()}`
             :winner.textContent = `Winner is ${ttt.player2.getName()}`
+            dialog.showModal()
+
         } 
     }
     const secCol = () => {
@@ -117,6 +134,8 @@ function gameLogic (array,position) {
             array[position]==="X"
             ?winner.textContent = `Winner is ${ttt.player1.getName()}`
             :winner.textContent = `Winner is ${ttt.player2.getName()}`
+            dialog.showModal()
+
         } 
     }    
     const thirdCol = () => {
@@ -125,6 +144,8 @@ function gameLogic (array,position) {
             array[position]==="X"
             ?winner.textContent = `Winner is ${ttt.player1.getName()}`
             :winner.textContent = `Winner is ${ttt.player2.getName()}`
+            dialog.showModal()
+
         } 
     }
     const firstDg = () => {
@@ -133,6 +154,8 @@ function gameLogic (array,position) {
             array[position]==="X"
             ?winner.textContent = `Winner is ${ttt.player1.getName()}`
             :winner.textContent = `Winner is ${ttt.player2.getName()}`
+            dialog.showModal()
+
         } 
     }
     const secDg = () => {
@@ -141,6 +164,8 @@ function gameLogic (array,position) {
             array[position]==="X"
             ?winner.textContent = `Winner is ${ttt.player1.getName()}`
             :winner.textContent = `Winner is ${ttt.player2.getName()}`
+            dialog.showModal()
+
         } 
     }
 

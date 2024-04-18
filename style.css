@@ -64,3 +64,14 @@ h2{
 .checked{
     background-color: lightgray;
 }
+
+.p1, .p2{
+    display: flex;
+    align-items: center;
+    justify-self:center;
+    flex-direction: column;
+    h1,h2{
+        padding: 0;
+        margin: 0;
+    }
+}
