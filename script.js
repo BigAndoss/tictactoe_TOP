@@ -16,18 +16,20 @@ function createGame (){
 
     let gameNumber = 0;
     let turns = 1;
-    const fieldArray = new Array(9)
+    let fieldArray = new Array(9)
 
     const getGameNumber = () => {return gameNumber}
     const nextGame = () => {gameNumber++}
     const resetGame = () => {gameNumber = 0}
     const nextTurn = () => {turns++}
     const getTurns = () => {return turns};
+    const resetTurn = () => {turns = 1}
+    const resetArray = () => {fieldArray.fill('',0,9)}
 
     const player1 = createPlayer(prompt("First Player:"))
     const player2 = createPlayer(prompt("Second Player:"))
 
-    return{getGameNumber,nextGame,player1,player2, resetGame, getTurns, nextTurn, fieldArray}
+    return{getGameNumber,nextGame,player1,player2, resetGame, getTurns, nextTurn, resetTurn,resetArray,fieldArray}
 }
 
 const gameBox = document.querySelector(".game")
@@ -43,40 +45,49 @@ function startGame () {
     const p2 = document.querySelector(".player2")
     p1.textContent = `${ttt.player1.getName()}`
     p2.textContent = `${ttt.player2.getName()}`
-    
+    gameField()
 }
 
 let ttt;
 
-function nextGame () {
-    
-}
-
-function switchSign (){
-    let turns;
-    ttt.getTurns() % 2 ? turns = "X" :turns ="O"
-    ttt.nextTurn();
-    return turns;
-}
 
 let fields = document.querySelectorAll(".field");
-fields.forEach(field => {
-    function getPosition () {
-        let position = field.getAttribute("data-arr-num");
-        field.classList.add("checked");
 
-        let sign = switchSign()
-        field.textContent = sign;
-        
-        ttt.fieldArray.splice(position,1,sign)
-        // console.log(ttt.fieldArray)
-        gameLogic(ttt.fieldArray,position)
-        // console.log(ttt.fieldArray)
-        // field.hasAttributes()
+const nextGame = () =>{
+    fields.forEach(field=>{
+        field.classList.remove("checked")
+        field.textContent = ""
+        field.removeEventListener('click',gameField.getPosition)
+        ttt.resetTurn();
+        ttt.resetArray()
+    })
+    gameField()
+}
 
-    }
-    field.addEventListener('click', getPosition, {once:true})
-});
+const gameField = () => {
+    fields.forEach(field => {
+        const getPosition = () => {
+            let position = field.getAttribute("data-arr-num");
+            field.classList.add("checked");
+    
+            let sign = ttt.getTurns() % 2 ?"X" :"O"
+            ttt.nextTurn();
+
+            field.textContent = sign;
+            ttt.fieldArray.splice(position,1,sign)
+            // console.log(ttt.fieldArray)
+            gameLogic(ttt.fieldArray,position)
+            // console.log(ttt.fieldArray)
+            // field.hasAttributes()
+            console.log(ttt.getTurns(),sign)
+            console.log(ttt.fieldArray)
+    
+        }
+        field.addEventListener('click', getPosition, {once:true})
+        return getPosition
+    });
+      
+}
 
 
 
@@ -88,85 +99,37 @@ const nextGameButton = document.querySelector(".nextGame")
 nextGameButton.addEventListener('click',nextGame)
 
 function gameLogic (array,position) {
+    const msg = () =>{ array[position]==="X"
+    ?winner.textContent = `Winner is ${ttt.player1.getName()}`
+    :winner.textContent = `Winner is ${ttt.player2.getName()}`
+    dialog.showModal() 
+    
+}
+
     const firstRow = () => {
-        if(array[0]===array[1] && array[0]===array[2]){
-
-            array[position]==="X"
-            ?winner.textContent = `Winner is ${ttt.player1.getName()}`
-            :winner.textContent = `Winner is ${ttt.player2.getName()}`
-            dialog.showModal()
-
-        } 
+    if(array[0]===array[1] && array[0]===array[2]) msg()
     }
+        
     const secRow = () => {
-        if(array[3]===array[4] && array[3]===array[5]){
-
-            array[position]==="X"
-            ?winner.textContent = `Winner is ${ttt.player1.getName()}`
-            :winner.textContent = `Winner is ${ttt.player2.getName()}`
-            dialog.showModal()
-
-        } 
+        if(array[3]===array[4] && array[3]===array[5])msg() 
     }
     const thirdRow = () => {
-        if(array[6]===array[7] && array[6]===array[8]){
-
-            array[position]==="X"
-            ?winner.textContent = `Winner is ${ttt.player1.getName()}`
-            :winner.textContent = `Winner is ${ttt.player2.getName()}`
-            dialog.showModal()
-
-        } 
+        if(array[6]===array[7] && array[6]===array[8])msg()
     }
     const firstCol = () => {
-        if(array[0]===array[3] && array[0]===array[6]){
-
-            array[position]==="X"
-            ?winner.textContent = `Winner is ${ttt.player1.getName()}`
-            :winner.textContent = `Winner is ${ttt.player2.getName()}`
-            dialog.showModal()
-
-        } 
+        if(array[0]===array[3] && array[0]===array[6])msg()
     }
     const secCol = () => {
-        if(array[1]===array[4] && array[1]===array[7]){
-
-            array[position]==="X"
-            ?winner.textContent = `Winner is ${ttt.player1.getName()}`
-            :winner.textContent = `Winner is ${ttt.player2.getName()}`
-            dialog.showModal()
-
-        } 
+        if(array[1]===array[4] && array[1]===array[7])msg()
     }    
     const thirdCol = () => {
-        if(array[2]===array[5] && array[2]===array[8]){
-
-            array[position]==="X"
-            ?winner.textContent = `Winner is ${ttt.player1.getName()}`
-            :winner.textContent = `Winner is ${ttt.player2.getName()}`
-            dialog.showModal()
-
-        } 
+        if(array[2]===array[5] && array[2]===array[8])msg()
     }
     const firstDg = () => {
-        if(array[0]===array[4] && array[0]===array[8]){
-
-            array[position]==="X"
-            ?winner.textContent = `Winner is ${ttt.player1.getName()}`
-            :winner.textContent = `Winner is ${ttt.player2.getName()}`
-            dialog.showModal()
-
-        } 
+        if(array[0]===array[4] && array[0]===array[8])msg()
     }
     const secDg = () => {
-        if(array[2]===array[4] && array[2]===array[6]){
-
-            array[position]==="X"
-            ?winner.textContent = `Winner is ${ttt.player1.getName()}`
-            :winner.textContent = `Winner is ${ttt.player2.getName()}`
-            dialog.showModal()
-
-        } 
+        if(array[2]===array[4] && array[2]===array[6])msg()
     }
 
 
