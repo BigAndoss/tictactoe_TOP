@@ -68,6 +68,7 @@ h2{
 }
 .checked{
     background-color: lightgray;
+    transition: 0.5s;
 }
 .field:hover:not(.checked){
     background-color: orange;
