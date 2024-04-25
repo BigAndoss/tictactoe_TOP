@@ -14,13 +14,13 @@ function createPlayer (name){
 
 function createGame (){
 
-    let gameNumber = 0;
+    let gameNumber = 1;
     let turns = 1;
     let fieldArray = new Array(9)
 
     const getGameNumber = () => {return gameNumber}
     const nextGame = () => {gameNumber++}
-    const resetGame = () => {gameNumber = 0}
+    const resetGame = () => {gameNumber = 1}
     const nextTurn = () => {turns++}
     const getTurns = () => {return turns};
     const resetTurn = () => {turns = 1}
@@ -34,6 +34,9 @@ function createGame (){
 
 const gameBox = document.querySelector(".game")
 const start = document.querySelector(".start");
+const p1score = document.querySelector('.p1Score')
+const p2score = document.querySelector('.p2Score')
+const gameNum = document.querySelector("#game")
 start.addEventListener('click',startGame)
 
 function startGame () {
@@ -48,43 +51,50 @@ function startGame () {
     gameField()
 }
 
+// function checkGame (position) {
+//     let fields = document.querySelectorAll(".field");
+//     let j = 0
+//     if(ttt.fieldArray[])
+// }
+
 let ttt;
 
-
-let fields = document.querySelectorAll(".field");
-
-const nextGame = () =>{
-    fields.forEach(field=>{
-        field.classList.remove("checked")
-        field.textContent = ""
-        field.removeEventListener('click',gameField.getPosition)
-        ttt.resetTurn();
-        ttt.resetArray()
-    })
-    gameField()
+const createFields = () => {
+    for (let i = 0; i <= 9; i++) {
+        let a = document.createElement('div')
+        a.classList.add('field')
+        a.setAttribute('data-arr-num',i)
+        gameBox.appendChild(a)
+    }
 }
 
+const nextGame = () =>{
+    gameBox.innerHTML=''
+    fieldChecker = 0
+    ttt.resetTurn();
+    ttt.resetArray()
+    gameField()
+}
+let fieldChecker = 0
 const gameField = () => {
+    createFields()
+    let fields = document.querySelectorAll(".field");
+
     fields.forEach(field => {
         const getPosition = () => {
+            fieldChecker++;
             let position = field.getAttribute("data-arr-num");
             field.classList.add("checked");
-    
+            // checkGame
             let sign = ttt.getTurns() % 2 ?"X" :"O"
             ttt.nextTurn();
 
             field.textContent = sign;
             ttt.fieldArray.splice(position,1,sign)
-            // console.log(ttt.fieldArray)
-            gameLogic(ttt.fieldArray,position)
-            // console.log(ttt.fieldArray)
-            // field.hasAttributes()
-            console.log(ttt.getTurns(),sign)
-            console.log(ttt.fieldArray)
-    
+            gameLogic(ttt.fieldArray,position)  
+            // console.log('f') 
         }
         field.addEventListener('click', getPosition, {once:true})
-        return getPosition
     });
       
 }
@@ -99,37 +109,70 @@ const nextGameButton = document.querySelector(".nextGame")
 nextGameButton.addEventListener('click',nextGame)
 
 function gameLogic (array,position) {
-    const msg = () =>{ array[position]==="X"
-    ?winner.textContent = `Winner is ${ttt.player1.getName()}`
-    :winner.textContent = `Winner is ${ttt.player2.getName()}`
+    const msg = () =>{ 
+        if (array[position]==="X"){
+            winner.textContent = `Winner is ${ttt.player1.getName()}`
+            ttt.player1.won()
+            ttt.nextGame()
+            gameNum.textContent = ttt.getGameNumber()
+            p1score.textContent = ttt.player1.getScore()
+        }else{
+            winner.textContent = `Winner is ${ttt.player2.getName()}`
+            ttt.player2.won()
+            ttt.nextGame()
+            gameNum.textContent = ttt.getGameNumber()
+            p2score.textContent = ttt.player2.getScore()
+        }
     dialog.showModal() 
+    }
     
-}
 
     const firstRow = () => {
     if(array[0]===array[1] && array[0]===array[2]) msg()
+    else if (fieldChecker === 9) draw()
     }
         
     const secRow = () => {
-        if(array[3]===array[4] && array[3]===array[5])msg() 
+        if(array[3]===array[4] && array[3]===array[5])msg()
+        else if (fieldChecker === 9) draw()
+
     }
     const thirdRow = () => {
         if(array[6]===array[7] && array[6]===array[8])msg()
+        else if (fieldChecker === 9) draw()
+
     }
     const firstCol = () => {
         if(array[0]===array[3] && array[0]===array[6])msg()
+        else if (fieldChecker === 9) draw()
+
     }
     const secCol = () => {
         if(array[1]===array[4] && array[1]===array[7])msg()
+        else if (fieldChecker === 9) draw()
+
     }    
     const thirdCol = () => {
         if(array[2]===array[5] && array[2]===array[8])msg()
+        else if (fieldChecker === 9) draw()
+
     }
     const firstDg = () => {
         if(array[0]===array[4] && array[0]===array[8])msg()
+        else if (fieldChecker === 9) draw()
+
     }
     const secDg = () => {
         if(array[2]===array[4] && array[2]===array[6])msg()
+        else if (fieldChecker === 9) draw()
+
+    }
+    const draw = () => {
+        fieldChecker = 0;
+        winner.textContent = "Draw"
+        ttt.nextGame()
+        gameNum.textContent = ttt.getGameNumber()
+        dialog.showModal()
     }
 
 
