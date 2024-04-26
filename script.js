@@ -51,11 +51,6 @@ function startGame () {
     gameField()
 }
 
-// function checkGame (position) {
-//     let fields = document.querySelectorAll(".field");
-//     let j = 0
-//     if(ttt.fieldArray[])
-// }
 
 let ttt;
 
@@ -99,8 +94,15 @@ const gameField = () => {
       
 }
 
+function newGame(player) {
+    winner.textContent = `${player} won`
+    nextGameButton.textContent ="Start new game"
+    nextGameButton.removeEventListener('click',nextGame)
+    nextGameButton.addEventListener('click',()=>{
+    location.reload()
 
-
+    })
+}
 
 let winner = document.querySelector("#end")
 
@@ -111,17 +113,24 @@ nextGameButton.addEventListener('click',nextGame)
 function gameLogic (array,position) {
     const msg = () =>{ 
         if (array[position]==="X"){
-            winner.textContent = `Winner is ${ttt.player1.getName()}`
-            ttt.player1.won()
-            ttt.nextGame()
-            gameNum.textContent = ttt.getGameNumber()
-            p1score.textContent = ttt.player1.getScore()
+            if(ttt.player1.getScore() > 3){newGame(ttt.player1.getName())}
+            else{
+                winner.textContent = `Winner is ${ttt.player1.getName()}`
+                ttt.player1.won()
+                ttt.nextGame()
+                gameNum.textContent = ttt.getGameNumber()
+                p1score.textContent = ttt.player1.getScore()
+            }
+
         }else{
-            winner.textContent = `Winner is ${ttt.player2.getName()}`
-            ttt.player2.won()
-            ttt.nextGame()
-            gameNum.textContent = ttt.getGameNumber()
-            p2score.textContent = ttt.player2.getScore()
+            if(ttt.player2.getScore() > 3){newGame(ttt.player2.getName())}
+            else {
+                winner.textContent = `Winner is ${ttt.player2.getName()}`
+                ttt.player2.won()
+                ttt.nextGame()
+                gameNum.textContent = ttt.getGameNumber()
+                p2score.textContent = ttt.player2.getScore()
+            }
         }
     dialog.showModal() 
     }

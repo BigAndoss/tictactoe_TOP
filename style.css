@@ -84,3 +84,27 @@ h2{
         margin: 0;
     }
 }
+dialog{
+    width: 200px;
+    height: 150px;
+    /* display: flex; */
+    /* align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column; */
+    border-radius: 20px;
+    border: 2px solid rgb(0, 0, 114);
+    p{
+      font-size: 20px;  
+      font-weight: bold;
+    }
+    button{
+        font-size: 20px;
+        font-weight: bold;
+        color: whitesmoke;
+        background-color: blue;
+        width: max-content;
+        padding: 10px;
+        border: none;
+        border-radius: 20px;
+    }
+}
